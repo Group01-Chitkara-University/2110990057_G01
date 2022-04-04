@@ -8,6 +8,9 @@ void printMainMenu();
 void start();
 void login();
 void createAccount();
+void deposit();
+void withdraw();
+void reqBalance();
 
 // global variable (use this variable to store the user’s menu selection)
 char menuInput;
@@ -86,11 +89,13 @@ void deposit(){
     cout << endl;
     cout << "Deposited Successfully!!" << endl << endl;
     cout << "------------------------" << endl;
+    printMainMenu();
 }
 
 void withdraw(){
     if(dpMoney==0){
         cout << "You have ₹ 0 in your Account!!" << endl;
+        printMainMenu();
     }
     else{
         int i = 0;
@@ -103,29 +108,30 @@ void withdraw(){
                 cout << "Sorry, invalid inputs recieved too many times! Start Again"<< endl;
                 printMainMenu();
                 break;
-        }
+        }}
         cout << endl;
         cout << "You don't have sufficient balance!" << endl << endl;
-        cout << "Enter amount to be withdrawn: $";
+        cout << "Enter amount to be withdrawn: ₹";
         cin >> wdMoney;
         i+=1;
+        cin.clear();
+        dpMoney -= wdMoney;
+        cout << endl;
+        cout << "Transaction Successfull!!" << endl << endl;
+        cout << "--------------------------" << endl;
+        printMainMenu();
     }
-    cin.clear();
-    dpMoney -= wdMoney;
-    cout << endl;
-    cout << "Transaction Successfull!!" << endl << endl;
-    cout << "--------------------------" << endl;
-    printMainMenu();
 }
 
 void reqBalance(){
-
+    cout << "₹" << dpMoney << endl;
+    printMainMenu();
 }
 
 void start()
 {
 	cout << "Please select an option from the menu below:" << endl;
-    printMainMenu();
+    printIntroMenu();
 }
 
 void createAccount()
@@ -149,5 +155,9 @@ void login()
     if(userCopy==user && pwdCopy == pwd){
         cout << "****** LOGIN SUCCESSFULL ******" << endl;
         printMainMenu();
+    }
+    else{
+        cout << "Username or Password don't match." << endl;
+        printIntroMenu();
     }
 }
