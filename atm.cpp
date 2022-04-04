@@ -15,9 +15,7 @@ char menuInput;
 // the main function
 int main()
 {
-	// TO WRITE A WELCOME MESSAGE HERE
-
-    
+	// TO WRITE A WELCOME MESSAGE HERE  
     
 		// call the function start
 		start();
@@ -27,20 +25,31 @@ int main()
 
 void printIntroMenu()
 {
-	cout << "Please select an option from the menu below:" << endl;
     cout << "l  -> Login" << endl;
     cout << "c -> Create New Account" << endl;
     cout << "q -> Quit" << endl;
-}
-
-void printMainMenu()
-{
-	// WRITE CODE HERE
+    char input;
+    cin >> input;
+    switch (input){
+        case 'l':
+            login();
+            break;
+        case 'c':
+            createAccount();
+            break;
+        case 'q':
+            exit(0);
+            break;
+        default:
+            cout << "Please enter the correct option.." << endl;
+            break;
+    }
 }
 
 void start()
 {
-	// EXPLANATION OF CODE THAT GOES HERE IS BELOW
+	cout << "Please select an option from the menu below:" << endl;
+    printMainMenu();
 }
 
 void createAccount()
