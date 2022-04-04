@@ -102,18 +102,19 @@ void withdraw(){
         cout << endl;
         cout << "Enter amount to be withdrawn: ₹";
         cin >> wdMoney;
-        while(wdMoney <= dpMoney){
+        while(wdMoney > dpMoney){
             if(i == 2){
                 cout << endl;
                 cout << "Sorry, invalid inputs recieved too many times! Start Again"<< endl;
                 printMainMenu();
                 break;
-        }}
+        }
         cout << endl;
         cout << "You don't have sufficient balance!" << endl << endl;
-        cout << "Enter amount to be withdrawn: ₹";
+        cout << "Enter amount to be withdrawn: $";
         cin >> wdMoney;
         i+=1;
+        }
         cin.clear();
         dpMoney -= wdMoney;
         cout << endl;
