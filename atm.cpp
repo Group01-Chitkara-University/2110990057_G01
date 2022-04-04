@@ -54,7 +54,14 @@ void start()
 
 void createAccount()
 {
-	// PHASE 2
+	string user, pwd;
+    cout << "Enter Username --> " << endl;
+    cin >> user;
+    cout << "Enter Password --> " << endl;
+    cin >> pwd;
+
+    cout << "Thank You.." << endl;
+    printIntroMenu();
 }
 
 void login()
