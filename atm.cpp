@@ -11,6 +11,7 @@ void createAccount();
 
 // global variable (use this variable to store the user’s menu selection)
 char menuInput;
+string user, pwd;
 
 // the main function
 int main()
@@ -46,6 +47,10 @@ void printIntroMenu()
     }
 }
 
+void printMainMenu(){
+    
+}
+
 void start()
 {
 	cout << "Please select an option from the menu below:" << endl;
@@ -54,7 +59,6 @@ void start()
 
 void createAccount()
 {
-	string user, pwd;
     cout << "Enter Username --> " << endl;
     cin >> user;
     cout << "Enter Password --> " << endl;
@@ -66,5 +70,13 @@ void createAccount()
 
 void login()
 {
-	// PHASE 2
+    string userCopy, pwdCopy;
+	cout << "Enter your Username --> ";
+    cin >> userCopy;
+    cout << "Enter your Password --> ";
+    cin >> pwdCopy;
+    if(userCopy==user && pwdCopy == pwd){
+        cout << "****** LOGIN SUCCESSFULL ******" << endl;
+        printMainMenu();
+    }
 }
