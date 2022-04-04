@@ -12,7 +12,8 @@ void createAccount();
 // global variable (use this variable to store the user’s menu selection)
 char menuInput;
 string user, pwd;
-
+double dpMoney;
+double wdMoney;
 // the main function
 int main()
 {
@@ -80,7 +81,6 @@ void printMainMenu(){
 
 void deposit(){
     cout << endl;
-    double dpMoney;
     cout << "Enter the amount to be depostied: ₹";
     cin >> dpMoney;
     cout << endl;
@@ -89,7 +89,33 @@ void deposit(){
 }
 
 void withdraw(){
-
+    if(dpMoney==0){
+        cout << "You have ₹ 0 in your Account!!" << endl;
+    }
+    else{
+        int i = 0;
+        cout << endl;
+        cout << "Enter amount to be withdrawn: ₹";
+        cin >> wdMoney;
+        while(wdMoney <= dpMoney){
+            if(i == 2){
+                cout << endl;
+                cout << "Sorry, invalid inputs recieved too many times! Start Again"<< endl;
+                printMainMenu();
+                break;
+        }
+        cout << endl;
+        cout << "You don't have sufficient balance!" << endl << endl;
+        cout << "Enter amount to be withdrawn: $";
+        cin >> wdMoney;
+        i+=1;
+    }
+    cin.clear();
+    dpMoney -= wdMoney;
+    cout << endl;
+    cout << "Transaction Successfull!!" << endl << endl;
+    cout << "--------------------------" << endl;
+    printMainMenu();
 }
 
 void reqBalance(){
