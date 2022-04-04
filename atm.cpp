@@ -79,7 +79,13 @@ void printMainMenu(){
 }
 
 void deposit(){
-
+    cout << endl;
+    double dpMoney;
+    cout << "Enter the amount to be depostied: ₹";
+    cin >> dpMoney;
+    cout << endl;
+    cout << "Deposited Successfully!!" << endl << endl;
+    cout << "------------------------" << endl;
 }
 
 void withdraw(){
