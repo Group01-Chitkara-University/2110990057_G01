@@ -43,12 +43,51 @@ void printIntroMenu()
             break;
         default:
             cout << "Please enter the correct option.." << endl;
+            printIntroMenu();
             break;
     }
 }
 
 void printMainMenu(){
+    cout << "Choose from the Below options:- " << endl;
+    cout << "d 	-> Deposit Money" << endl;
+    cout << "w 	-> Withdraw Money" << endl;
+    cout << "r 	-> Request Balance" << endl;
+    cout << "q 	-> Quit" << endl;
     
+    char input;
+    cin >> input;
+    switch (input){
+        case 'd':
+            deposit();
+            break;
+        case 'w':
+            withdraw();
+            break;
+        case 'r':
+            reqBalance();
+            break;
+        case 'q':
+            cout << "Thank you, " << user << "!" << endl << endl;
+            printIntroMenu();
+            break;
+        default:
+            cout << "Please enter the correct option.." << endl;
+            printMainMenu();
+            break;
+    }
+}
+
+void deposit(){
+
+}
+
+void withdraw(){
+
+}
+
+void reqBalance(){
+
 }
 
 void start()
