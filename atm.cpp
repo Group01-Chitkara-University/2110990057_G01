@@ -17,10 +17,7 @@ int main()
 {
 	// TO WRITE A WELCOME MESSAGE HERE
 
-    cout << "Please select an option from the menu below:" << endl;
-    cout << "l  -> Login" << endl;
-    cout << "c -> Create New Account" << endl;
-    cout << "q -> Quit" << endl;
+    
     
 		// call the function start
 		start();
@@ -30,7 +27,10 @@ int main()
 
 void printIntroMenu()
 {
-	// WRITE CODE HERE
+	cout << "Please select an option from the menu below:" << endl;
+    cout << "l  -> Login" << endl;
+    cout << "c -> Create New Account" << endl;
+    cout << "q -> Quit" << endl;
 }
 
 void printMainMenu()
