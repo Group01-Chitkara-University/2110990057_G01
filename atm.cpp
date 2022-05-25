@@ -1,41 +1,71 @@
 #include <iostream>
-#include <stdlib.h>
-using namespace std;
+#include <string>
+#include <vector>
+#include <algorithm>
 
-	// function prototypes
+// https://stackoverflow.com/questions/5131647/why-would-we-call-cin-clear-and-cin-ignore-after-reading-input
+
+/*
+    Pre-Defining all the functions to be used in the program.
+    All global variables declared here.
+
+    Project Started on: 26th March, 2022;
+    project Finished on: 27th March, 2022;
+*/
+
+using namespace std;
+char menuInput;
+char mainInput;
+
+// Vectors support dynamic assignment so used over arrays in this project
+
+vector<string> id;
+vector<string> password;
+vector<int> bal(9999, 0);
+
+// Definition of all functions
+
 void printIntroMenu();
-void printMainMenu();
+void printMainMenu(int index, string uname);
 void start();
 void login();
 void createAccount();
-void deposit();
-void withdraw();
-void reqBalance();
+void addData(string name, string pass);
+void deposit(int index, string uname);
+void withdraw(int index, string uname);
+void request(int index, string uname);
 
-// global variable (use this variable to store the user’s menu selection)
-char menuInput;
-string user, pwd;
-double dpMoney;
-double wdMoney;
-// the main function
-int main()
-{
-	// TO WRITE A WELCOME MESSAGE HERE  
-    
-		// call the function start
-		start();
+/*
+    The main function just invokes the start function which kicks off the rest of the program;
 
-		return 0;
+    Start Function:
+        1. Calls the printIntroMenu() Function to print the entry menu;
+        2. User selects the options shown and the program moves forward accordingly.
+*/
+
+int main(){
+    cout << "Hello, User!! Welcome to this ATM Project!" << endl;
+    cout << endl;
+    start();
+    return 0;
 }
 
-void printIntroMenu()
-{
-    cout << "l  -> Login" << endl;
-    cout << "c -> Create New Account" << endl;
-    cout << "q -> Quit" << endl;
-    char input;
-    cin >> input;
-    switch (input){
+void start(){
+    cout << "Please Select an option from the menu below: " << endl;
+    printIntroMenu();
+}
+
+/*
+    printIntroMenu() function:
+        1. Asks the user for the choice of the function he/she wants to perform
+        2. Proceeds the program accordingly.
+        3. If the user enters wrong choice he/she will be prompted to enter the values again.
+*/
+
+void printIntroMenu(){
+    cout << "l -> Login\nc -> Create New Account\nq -> Quit\n\n> " ;
+    cin >> menuInput;
+    switch (menuInput){
         case 'l':
             login();
             break;
@@ -46,119 +76,62 @@ void printIntroMenu()
             exit(0);
             break;
         default:
-            cout << "Please enter the correct option.." << endl;
+            cout << "Please enter correct input!!! \n" << endl;
             printIntroMenu();
             break;
     }
 }
 
-void printMainMenu(){
-    cout << "Choose from the Below options:- " << endl;
-    cout << "d 	-> Deposit Money" << endl;
-    cout << "w 	-> Withdraw Money" << endl;
-    cout << "r 	-> Request Balance" << endl;
-    cout << "q 	-> Quit" << endl;
-    
-    char input;
-    cin >> input;
-    switch (input){
-        case 'd':
-            deposit();
-            break;
-        case 'w':
-            withdraw();
-            break;
-        case 'r':
-            reqBalance();
-            break;
-        case 'q':
-            cout << "Thank you, " << user << "!" << endl << endl;
-            printIntroMenu();
-            break;
-        default:
-            cout << "Please enter the correct option.." << endl;
-            printMainMenu();
-            break;
-    }
-}
 
-void deposit(){
-    cout << endl;
-    cout << "Enter the amount to be depostied: ₹";
-    cin >> dpMoney;
-    cout << endl;
-    cout << "Deposited Successfully!!" << endl << endl;
-    cout << "------------------------" << endl;
-    printMainMenu();
-}
+/*
+    Login Function:
+        1. This function first check if there are any accounts stored if there is no account the user is prompted to go to the intromenu function to create an account.
+        2. If there is/are account(s) in the storage then the user enters the username.
+        3. the program checks if the username exists before asking for password.
+        4. if the user exists then user is prompted to enter password
+        5. after that password validation occurs and based on that the program proceeds accordingly.
+*/
 
-void withdraw(){
-    if(dpMoney==0){
-        cout << "You have ₹ 0 in your Account!!" << endl;
-        printMainMenu();
-    }
-    else{
-        int i = 0;
+void login(){
+    bool found = false;
+    string uname, paswd, dummy;
+    int index;
+    if (id.size() == 0 && password.size()  == 0){
         cout << endl;
-        cout << "Enter amount to be withdrawn: ₹";
-        cin >> wdMoney;
-        while(wdMoney > dpMoney){
-            if(i == 2){
-                cout << endl;
-                cout << "Sorry, invalid inputs recieved too many times! Start Again"<< endl;
-                printMainMenu();
-                break;
-        }
-        cout << endl;
-        cout << "You don't have sufficient balance!" << endl << endl;
-        cout << "Enter amount to be withdrawn: $";
-        cin >> wdMoney;
-        i+=1;
-        }
-        cin.clear();
-        dpMoney -= wdMoney;
-        cout << endl;
-        cout << "Transaction Successfull!!" << endl << endl;
-        cout << "--------------------------" << endl;
-        printMainMenu();
-    }
-}
-
-void reqBalance(){
-    cout << "₹" << dpMoney << endl;
-    printMainMenu();
-}
-
-void start()
-{
-	cout << "Please select an option from the menu below:" << endl;
-    printIntroMenu();
-}
-
-void createAccount()
-{
-    cout << "Enter Username --> " << endl;
-    cin >> user;
-    cout << "Enter Password --> " << endl;
-    cin >> pwd;
-
-    cout << "Thank You.." << endl;
-    printIntroMenu();
-}
-
-void login()
-{
-    string userCopy, pwdCopy;
-	cout << "Enter your Username --> ";
-    cin >> userCopy;
-    cout << "Enter your Password --> ";
-    cin >> pwdCopy;
-    if(userCopy==user && pwdCopy == pwd){
-        cout << "****** LOGIN SUCCESSFULL ******" << endl;
-        printMainMenu();
-    }
-    else{
-        cout << "Username or Password don't match." << endl;
+        cout << "Currently we have no accounts!! Please create an account!" << endl;
         printIntroMenu();
+    }
+    else{
+        getline(cin, dummy);
+        cout << endl;
+        cout << "Enter your User Name: ";
+        getline(cin, uname);
+        cout << endl;
+
+        for(int i = 0; i < id.size(); i ++){
+            if(uname == id[i]){
+                found = true;
+                index = i;
+                break;
+            }
+        }
+        if(found){
+            cout << "Enter your Password: ";
+            getline(cin, paswd);
+            if(password[index] == paswd){
+                cout << endl;
+                cout << "****** LOGIN SUCCESSFULL ******" << endl << endl;
+                printMainMenu(index, uname);
+            }
+            else{
+                cout << endl;
+                cout << "ERROR!!! PLEASE START AGAIN" << endl << endl;
+                printIntroMenu();
+            }
+        }
+        else{
+            cout << "No such user exists!! Please Register!" << endl << endl;
+            printIntroMenu();
+        }
     }
 }
