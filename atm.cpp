@@ -135,3 +135,169 @@ void login(){
         }
     }
 }
+
+/*
+    addData function:
+        1. It justs pushes the passed values into it to the vectors.
+*/
+
+void addData(string name, string pass){
+    replace(name.begin(), name.end(), ' ', '_');
+    id.push_back(name);
+    replace(pass.begin(), pass.end(), ' ', '_');
+    password.push_back(pass);
+}
+
+/* 
+
+    Create a Account:
+        1. user is prompted to create an account. By default the spaces get converted to underscores
+
+*/
+
+void createAccount(){
+    string uname, paswd, dummy;
+    getline(cin, dummy);
+    cout << endl;
+    cout << "Enter user name [spaces get converted to underscore]: ";
+    getline(cin, uname);
+
+    cout << endl;
+
+    cout << "Enter a password[spaces get converted to underscore]: ";
+    getline(cin, paswd);
+
+    addData(uname, paswd);
+    cout << endl;
+    cout << "Thank You! Your account has been created!" << endl << endl;
+
+    printIntroMenu();
+}
+
+/* 
+    printMainMenu funtion:
+        1. It is called if the login is successful
+        2. It asks for the user choice for the functions like deposit, view balance, withdraw.
+        3. the program proceeds further according to the input provided.
+*/
+
+void printMainMenu(int index, string uname){
+    cout << endl;
+    cout << "--------Hello, " << uname << "! Please select from options below --------" << endl << endl;
+    cout << "d -> Deposit Money\nw -> Withdraw Money\nr -> Request Balance\nq -> Quit\n\n> " ;
+    cin >> mainInput;
+
+    switch (mainInput){
+        case 'd':
+            deposit(index, uname);
+            break;
+        case 'w':
+            withdraw(index, uname);
+            break;
+        case 'r':
+            request(index, uname);
+            break;
+        case 'q':
+            cout << "Thank you, " << uname << "!" << endl << endl;
+            printIntroMenu();
+            break;
+        default:
+            cout << endl;
+            cout << "Wrong Choice!! Please Enter Again!" << endl;
+            printMainMenu(index, uname);
+    }
+}
+
+/*
+    deposit function:
+        1. Facilitates the user to deposti amount into their account.
+*/
+
+void deposit(int index, string uname){
+    cout << endl;
+    int dpMoney;
+
+    cout << "Enter the amount to be depostied: $";
+    cin >> dpMoney;
+
+    bal.at(index) += dpMoney;
+    cout << endl;
+    cout << "Deposited Successfully!!" << endl << endl;
+    cout << "------------------------" << endl;
+
+
+    printMainMenu(index, uname);
+}
+
+/*
+    withdraw function:
+        1. Checks for the balance in the acount first.
+        2. If balance is 0 then moeny can't be withdrwan.
+        3. Else the control moves further where user is asked for amount to be withdrawn
+        4. the user has to enter amount and if enters more than the balance he/she has to enter again.
+*/
+
+void withdraw(int index, string uname){
+    int wdMoney;
+    /*try
+    {
+        cout << bal.at(index);
+    }
+    catch(const std::out_of_range& e)
+    {
+        cout << endl;
+        cout << "No balance!! Please deposit some money first!" << endl;
+
+    }*/
+    // The vector.at() function throws an  std::out_of_range exception if there is null value at that particular index. This try catch block handles it.
+
+    if(bal.at(index) == 0){
+        cout << endl;
+        cout << "Your balance is $0! You can't withdraw money right now!" << endl;
+        printMainMenu(index, uname);
+    }
+    else{
+        int i = 0;
+        cout << endl;
+        cout << "Enter amount to be withdrawn: $";
+        cin >> wdMoney;
+        while (!(wdMoney <= bal.at(index)))
+        {
+            if(i == 2){
+                cout << endl;
+                cout << "Sorry, invalid inputs recieved too many times! Start Again"<< endl;
+                printMainMenu(index, uname);
+                break;
+            }
+            cout << endl;
+            cout << "You don't have sufficient balance!" << endl << endl;
+            cout << "Enter amount to be withdrawn: $";
+            cin >> wdMoney;
+            i+=1;
+        }
+        
+        cin.clear();
+        bal.at(index) -= wdMoney;
+        cout << endl;
+        cout << "Transaction Successfull!!" << endl << endl;
+        cout << "--------------------------" << endl;
+        printMainMenu(index, uname);
+    }
+}
+
+/*
+    request funtion:
+        1. Displays the user balance.
+*/
+void request(int index, string uname){
+    if(bal.at(index) == 0){
+        cout << endl;
+        cout << "Your balance is $0!" << endl;
+        printMainMenu(index, uname);
+    }
+    else{
+        cout << endl;
+        cout << "Dear, "<< uname << " your balance is: $"<< bal.at(index) << endl; 
+        printMainMenu(index, uname);
+    }
+}
