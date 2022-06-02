@@ -25,6 +25,13 @@ vector<int> bal(9999, 0);
 
 // Definition of all functions
 
+/*
+    Function: addUser
+    Description: Adds a new user to the system.
+    Parameters: None
+    Returns: None
+*/
+
 void printIntroMenu();
 void printMainMenu(int index, string uname);
 void start();
